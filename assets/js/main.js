@@ -1,7 +1,6 @@
 (function () {
   "use strict";
 
-  var WA_NUMBER = "260967970640";
   var STORE_KEY = "atithi-order-v1";
   var doc = document;
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -315,7 +314,7 @@
     });
   });
 
-  $("#order-open").addEventListener("click", function () { openDialog(dialog); });
+  $("#order-open").addEventListener("click", function () { $("#order-sent").hidden = true; openDialog(dialog); });
   $("#order-clear").addEventListener("click", function () {
     order = {};
     save();
@@ -348,7 +347,11 @@
     });
     lines.push("", "Estimated total: " + kwacha(total()), "Name: " + nameInput.value.trim());
     if (notes) lines.push("Notes: " + notes);
-    window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(lines.join("\n")), "_blank", "noopener");
+    var url = window.AtithiWhatsApp.open(lines.join("\n"));
+    var sent = $("#order-sent");
+    $("#order-sent-link").href = url;
+    sent.hidden = false;
+    toast("Opening WhatsApp: press send to place your order");
   });
 
   syncUI();

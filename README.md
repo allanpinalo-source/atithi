@@ -19,5 +19,7 @@ Netlify (drag and drop the folder at app.netlify.com/drop), cPanel `public_html`
 4. **Photos**: the food images are cut from the menu artwork. Real dish photos will look sharper.
 
 ## WhatsApp
-All buttons go to +260 96 797 0640. If the number changes, update `WA_NUMBER` in `assets/js/main.js`
-and the `wa.me/260967970640` links in `index.html`.
+All buttons go to +260 96 797 0640. Orders and reservations are sent through `window.AtithiWhatsApp` in
+`assets/js/site.js`: on phones it opens the WhatsApp app directly, and on computers it opens a new tab (or the
+same tab if pop-ups are blocked). If the number changes, update `WA_NUMBER` in `assets/js/site.js` and the
+`wa.me/260967970640` links in `index.html` and `reservation.html`.

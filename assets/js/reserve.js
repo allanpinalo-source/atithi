@@ -2,7 +2,6 @@
 (function () {
   "use strict";
 
-  var WA_NUMBER = "260967970640";
   var OPEN_MIN = 10 * 60;      // 10:00
   var LAST_SLOT = 21 * 60 + 30; // 21:30 (kitchen closes 22:00)
   var SLOT_STEP = 30;
@@ -199,9 +198,8 @@
     errorSummary.hidden = true;
 
     var v = values();
-    var url = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(buildMessage(v));
-    window.open(url, "_blank", "noopener");
-
+    // Show the confirmation panel first (it stays visible when the visitor comes back from WhatsApp)
+    var url = window.AtithiWhatsApp.url(buildMessage(v));
     doc.getElementById("done-wa").href = url;
     doc.getElementById("done-summary").innerHTML = "<strong>" + longDate(v.date) + " at " + v.time + "</strong> · " +
       guestsLabel(v.guests) + " · " + v.area;
@@ -209,6 +207,7 @@
     done.hidden = false;
     done.focus();
     done.scrollIntoView({ block: "start" });
+    window.AtithiWhatsApp.open(buildMessage(v));
   });
 
   doc.getElementById("done-edit").addEventListener("click", function () {

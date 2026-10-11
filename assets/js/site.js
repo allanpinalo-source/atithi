@@ -35,6 +35,28 @@
     if (e.key === "Escape" && nav.classList.contains("is-open")) { setNav(false); toggle.focus(); }
   });
 
+  /* ---------- WhatsApp ----------
+     One place for the number and for opening chats, used by the order basket and the reservation form.
+     Phones / in-app browsers (Instagram, Facebook) often block pop-ups, so on touch devices we navigate
+     straight to wa.me (which hands over to the WhatsApp app); on desktop we open a new tab and fall back
+     to navigating if the pop-up was blocked. */
+  var WA_NUMBER = "260967970640";
+  var isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+  window.AtithiWhatsApp = {
+    number: WA_NUMBER,
+    url: function (text) {
+      return "https://wa.me/" + WA_NUMBER + (text ? "?text=" + encodeURIComponent(text) : "");
+    },
+    open: function (text) {
+      var url = this.url(text);
+      if (isTouch) { window.location.href = url; return url; }
+      var w = null;
+      try { w = window.open(url, "_blank"); } catch (e) { w = null; }
+      if (w) { try { w.opener = null; } catch (e) {} } else { window.location.href = url; }
+      return url;
+    }
+  };
+
   /* ---------- "Back to top" + logo links ----------
      #top is the header, which is position: fixed, so the browser won't scroll to it. Scroll the page instead. */
   doc.addEventListener("click", function (e) {
